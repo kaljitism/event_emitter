@@ -1,7 +1,11 @@
 import EventEmitter from "events";
 
-export class ZenDevelopmentProcess extends EventEmitter{}
+class ZenDevelopmentProcess extends EventEmitter{}
 const zenDevProcess = new ZenDevelopmentProcess()
+
+zenDevProcess.once("create-project", (projectName: string) => {
+  console.log(`${projectName} created`)
+})
 
 zenDevProcess.on("module-written", (module: String) => {
   console.log(`>> Running tests on ${module}`)
@@ -32,6 +36,8 @@ zenDevProcess.on("server-overload", () => {
         >> Requests resolving smoothly, No Server-Overload`)
 })
 
+zenDevProcess.emit('create-project', 'app')
+zenDevProcess.emit('create-project', 'app')
 zenDevProcess.emit('module-written', 'engine')
 zenDevProcess.emit('compile-time-bugs', 'linter-fix')
 zenDevProcess.emit("runtime-bugs")
